@@ -1,0 +1,6 @@
+1. Lenh generate class tu table sql
+-================
+dotnet ef dbcontext scaffold "Data Source=.;Initial Catalog=SolidStore;Integrated Security=true;" Microsoft.EntityFrameworkCore.SqlServer --namespace SolidEdu.Shared --data-annotations
+-================
+Note: automatic generate all entities for our model from the database
+2. 

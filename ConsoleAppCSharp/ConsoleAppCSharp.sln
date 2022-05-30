@@ -27,6 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOP_DIP.Data", "..\DIP\OOP_
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{46974FBB-0825-4230-85DE-5D800457F84A}"
 	ProjectSection(SolutionItems) = preProject
+		Command-DB.txt = Command-DB.txt
 		Task-Async-Await.txt = Task-Async-Await.txt
 	EndProjectSection
 EndProject
@@ -34,9 +35,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Delegate_InDepth", "..\Dele
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataWithEFCore", "..\DataWithEFCore\DataWithEFCore.csproj", "{34593C72-40B4-4F64-885D-ED65DD4545C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingLINQWithObjects", "..\WorkingLINQWithObjects\WorkingLINQWithObjects.csproj", "{8C486FD3-D586-4342-8FAD-BA8AD6902FB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkingLINQWithObjects", "..\WorkingLINQWithObjects\WorkingLINQWithObjects.csproj", "{8C486FD3-D586-4342-8FAD-BA8AD6902FB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingLinqWithEFCore", "..\WorkingLinqWithEFCore\WorkingLinqWithEFCore.csproj", "{EC5C4021-E1FA-4A38-82ED-86018444F779}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkingLinqWithEFCore", "..\WorkingLinqWithEFCore\WorkingLinqWithEFCore.csproj", "{EC5C4021-E1FA-4A38-82ED-86018444F779}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.WebApi", "..\Ecommerce.WebApi\Ecommerce.WebApi.csproj", "{7EC38BF2-E6A4-4E78-A924-D918CDB8956C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.Common.EntityModels.SqlServer", "..\Ecommerce.Common.EntityModels.SqlServer\Ecommerce.Common.EntityModels.SqlServer.csproj", "{E25FDC87-D75C-4CF0-9EED-55F7C42FF28B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.Common.DataContext.SqlServer", "..\Ecommerce.Common.DataContext.SqlServer\Ecommerce.Common.DataContext.SqlServer.csproj", "{D8FEFBB2-5FFB-4AA0-9C8F-C949A8142A3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,6 +111,18 @@ Global
 		{EC5C4021-E1FA-4A38-82ED-86018444F779}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC5C4021-E1FA-4A38-82ED-86018444F779}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC5C4021-E1FA-4A38-82ED-86018444F779}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EC38BF2-E6A4-4E78-A924-D918CDB8956C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EC38BF2-E6A4-4E78-A924-D918CDB8956C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EC38BF2-E6A4-4E78-A924-D918CDB8956C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EC38BF2-E6A4-4E78-A924-D918CDB8956C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E25FDC87-D75C-4CF0-9EED-55F7C42FF28B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E25FDC87-D75C-4CF0-9EED-55F7C42FF28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E25FDC87-D75C-4CF0-9EED-55F7C42FF28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E25FDC87-D75C-4CF0-9EED-55F7C42FF28B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8FEFBB2-5FFB-4AA0-9C8F-C949A8142A3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8FEFBB2-5FFB-4AA0-9C8F-C949A8142A3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8FEFBB2-5FFB-4AA0-9C8F-C949A8142A3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8FEFBB2-5FFB-4AA0-9C8F-C949A8142A3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

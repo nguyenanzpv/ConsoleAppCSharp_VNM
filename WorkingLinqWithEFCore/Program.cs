@@ -1,6 +1,8 @@
 ﻿using SolidEdu.Shared; // SolidStore, Category, Product
 using Microsoft.EntityFrameworkCore; // DbSet<T>
-using static System.Console;FilterAndSort();
+using static System.Console;
+
+FilterAndSort();
 JoinCategoriesAndProducts();
 GroupJoinCategoriesAndProducts();
 AggregateProducts();
@@ -23,7 +25,8 @@ static void FilterAndSort()
                  product.ProductId,
                  product.ProductName,
                  product.UnitPrice
-             });
+             });
+
 
         WriteLine("Products that cost less than $10:");
 
@@ -40,7 +43,9 @@ static void FilterAndSort()
         }
         WriteLine();
     }
-}//inner join on foreigen keystatic void JoinCategoriesAndProducts()
+}
+//inner join on foreigen key
+static void JoinCategoriesAndProducts()
 {
     using (SolidStore db = new())
     {
@@ -58,7 +63,10 @@ static void FilterAndSort()
             arg2: item.CategoryName);
         }
     }
-}//Leftouter joinstatic void GroupJoinCategoriesAndProducts()
+}
+
+//Leftouter join
+static void GroupJoinCategoriesAndProducts()
 {
     using (SolidStore db = new())
     {
@@ -84,7 +92,9 @@ static void FilterAndSort()
             }
         }
     }
-}static void AggregateProducts()
+}
+
+static void AggregateProducts()
 {
     using (SolidStore db = new())
     {
@@ -108,4 +118,5 @@ static void FilterAndSort()
         arg1: db.Products
         .Sum(p => p.UnitPrice * p.UnitsInStock));
     }
-}
+}
+

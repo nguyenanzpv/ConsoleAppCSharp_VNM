@@ -24,4 +24,4 @@ public class SolidStore : DbContext
         .Property(product => product.UnitPrice)
         .HasConversion<double>();//convert decimal ve double
     }
-}
+}
