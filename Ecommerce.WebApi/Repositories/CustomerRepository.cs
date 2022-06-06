@@ -74,8 +74,10 @@ public class CustomerRepository : ICustomerRepository
         {
             if(customerCache.TryGetValue(id, out old))//out de giu thong tin va tra ra
             {
-
+               
             }
         }
+        return old;
     }
+    
 }
