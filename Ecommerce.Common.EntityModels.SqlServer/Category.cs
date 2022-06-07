@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Serialization;// use for [XmlIgnore]
 
 namespace SolidEdu.Shared
 {
@@ -24,6 +25,7 @@ namespace SolidEdu.Shared
         public byte[]? Picture { get; set; }
 
         [InverseProperty("Category")]
+        [XmlIgnore]
         public virtual ICollection<Product> Products { get; set; }
     }
 }

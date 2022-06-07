@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Serialization;// use for [XmlIgnore]
 
 namespace SolidEdu.Shared
 {
@@ -57,12 +58,15 @@ namespace SolidEdu.Shared
         [InverseProperty("InverseReportsToNavigation")]
         public virtual Employee? ReportsToNavigation { get; set; }
         [InverseProperty("ReportsToNavigation")]
+        [XmlIgnore]
         public virtual ICollection<Employee> InverseReportsToNavigation { get; set; }
         [InverseProperty("Employee")]
+        [XmlIgnore]
         public virtual ICollection<Order> Orders { get; set; }
 
         [ForeignKey("EmployeeId")]
         [InverseProperty("Employees")]
+        [XmlIgnore]
         public virtual ICollection<Territory> Territories { get; set; }
     }
 }

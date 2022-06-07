@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;//[Route], [ApiController], ControllerBase
 using SolidEdu.Shared;//Customer Entity
 using Ecommerce.WebApi.Repositories;//ICustomerRepository
+using Microsoft.AspNetCore.Cors;
 
 namespace Ecommerce.WebApi.Controllers
 {
     //url base: api/Customers => json
-    [Route("api/controller")] //api/Customers
+    [Route("api/[controller]")] //api/Customers
     [ApiController]//using http verse
     public class CustomersController : ControllerBase
     {
@@ -18,9 +19,11 @@ namespace Ecommerce.WebApi.Controllers
 
         //Get: api/customers
         //Get: api/customers/?country = [country]
+        //[EnableCors]
         [HttpGet]
         [ProducesResponseType(200, Type=typeof(IEnumerable<Customer>))]//thanh cong tra ve 200, kieu object Customer -> convert to json
         [ProducesResponseType(404)]
+        
         public async Task<IEnumerable<Customer>> GetCustomers(string? country)
         {
             if (string.IsNullOrWhiteSpace(country))
@@ -36,9 +39,11 @@ namespace Ecommerce.WebApi.Controllers
 
         //Get: api/customers/[id]
         //return 1 phan tu nen dung IActionResult
+        //[EnableCors]
         [HttpGet("{id}", Name = nameof(GetCustomer))]
         [ProducesResponseType(200, Type=typeof(Customer))]
         [ProducesResponseType(404)]
+      
         public async Task<IActionResult> GetCustomer(string id)
         {
             Customer? c = await  repo.RetrieveAsync(id);
@@ -79,5 +84,69 @@ namespace Ecommerce.WebApi.Controllers
             }
         }
 
+        //Put: api/customers/[id]
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Update(string id, [FromBody] Customer c)
+        {
+            id = id.ToUpper();
+            c.CustomerId = c.CustomerId.ToUpper();
+
+            if(c == null || c.CustomerId != id)
+            {
+                return BadRequest();//400 code
+            }
+
+            Customer? existing = await repo.RetrieveAsync(id);
+
+            if(existing == null)
+            {
+                return NotFound();//404
+            }
+
+            await repo.UpdateAsync(id, c);
+            return new NoContentResult();
+        }
+
+        //Delete: api/customers/[id]
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Delete(string id)
+        {
+            Customer? existing = await repo.RetrieveAsync(id);
+
+            if (existing == null)
+            {
+                if(id == "bad")
+                {
+                    //best pratice save to static class and to db
+                    ProblemDetails problemDetails = new()// su dung class ProblemDetails cua IAction Result in ApiController
+                    {
+                        Status = StatusCodes.Status400BadRequest,
+                        Type = "https://localhost:5001/customers/failed-to-delete",
+                        Title = $"Customer ID {id} found but failed to delete.",
+                        Detail = "More details like Company Name, Country and so on.",
+                        Instance = HttpContext.Request.Path
+                    };
+                    return BadRequest(problemDetails); // 400 Bad Request
+                }
+                return NotFound();//404
+            }
+            //if found id
+            bool? delete = await repo.DeleteAsync(id);
+            if(delete.HasValue && delete.Value) // neu co gia tri va la true
+            {
+                return new NoContentResult();//204 no content
+            }
+            else
+            {
+                return BadRequest($"Customer has {id} was found but failed to delete");//400
+            }
+
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Serialization;// use for [XmlIgnore]
 
 namespace SolidEdu.Shared
 {
@@ -41,6 +42,7 @@ namespace SolidEdu.Shared
         public string? HomePage { get; set; }
 
         [InverseProperty("Supplier")]
+        [XmlIgnore]
         public virtual ICollection<Product> Products { get; set; }
     }
 }

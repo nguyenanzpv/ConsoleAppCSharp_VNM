@@ -1,1 +1,3 @@
 https://ngocminhtran.com/2020/02/12/cac-dac-trung-huu-ich-trong-c-phan-3-lap-trinh-khong-dong-bo-asynchronous-programming/
+
+https://www.c-sharpcorner.com/article/enable-cors-consume-web-api-by-mvc-in-net-core-4/

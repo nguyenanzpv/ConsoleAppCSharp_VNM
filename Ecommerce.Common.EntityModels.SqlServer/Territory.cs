@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Serialization;// use for [XmlIgnore]
 
 namespace SolidEdu.Shared
 {
@@ -28,6 +29,7 @@ namespace SolidEdu.Shared
 
         [ForeignKey("TerritoryId")]
         [InverseProperty("Territories")]
+        [XmlIgnore]
         public virtual ICollection<Employee> Employees { get; set; }
     }
 }
