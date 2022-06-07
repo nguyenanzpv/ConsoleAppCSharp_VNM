@@ -39,7 +39,7 @@ public class CustomerRepository : ICustomerRepository
                 return c;
             }
             //if customer is new -> add to cache else update cache method
-            return customerCache.AddOrUpdate(c.CustomerId,c,UpdateCached());
+            return customerCache.AddOrUpdate(c.CustomerId,c, UpdateCached);
         }
         else
         {
@@ -47,24 +47,55 @@ public class CustomerRepository : ICustomerRepository
         }
     }
 
-    public Task<bool?> DeleteAsync(string id)
+    public async Task<bool?> DeleteAsync(string id)
     {
-        throw new NotImplementedException();
+        //for best performance -> get from cached(.net cache)
+        id = id.ToUpper();
+        //remove from db
+        Customer? c = db.Customers.Find(id);//out, ref, params
+        if (c is null) return null!;
+        db.Customers.Remove(c);// remove c from Customers
+        int effected = await db.SaveChangesAsync();// affected db
+        if(effected == 1)
+        {
+            if (customerCache is null) return null;
+            return customerCache.TryRemove(id, out c);// remove from cache
+        }
+        else
+        {
+            return null;
+        }
     }
 
-    public Task<IEnumerable<Customer?>> RetrieveAllAsync()
+    public Task<IEnumerable<Customer>> RetrieveAllAsync()
     {
-        throw new NotImplementedException();
+        //for best performance -> get from cached(.net cache)
+        return Task.FromResult(customerCache is null ? Enumerable.Empty<Customer>() : customerCache.Values);
     }
 
     public Task<Customer?> RetrieveAsync(string id)
     {
-        throw new NotImplementedException();
+        //for best performance -> get from cached(.net cache)
+        id = id.ToUpper();
+        if (customerCache is null) return null!;
+        customerCache.TryGetValue(id, out Customer? c);
+        return Task.FromResult(c);
     }
 
-    public Task<Customer?> UpdateAsync(string id, Customer c)
+    public async Task<Customer?> UpdateAsync(string id, Customer c)
     {
-        throw new NotImplementedException();
+        //for best performance -> get from cached(.net cache)
+        id = id.ToUpper();//old
+        c.CustomerId = c.CustomerId.ToUpper();
+        //update vao db bang EFCore
+        db.Customers.Update(c);
+        int effected = await db.SaveChangesAsync();
+        if(effected == 1)
+        {
+            //update in cached
+            return UpdateCached(id, c);
+        }
+        return null;
     }
 
     private Customer UpdateCached(string id, Customer c)
@@ -74,10 +105,13 @@ public class CustomerRepository : ICustomerRepository
         {
             if(customerCache.TryGetValue(id, out old))//out de giu thong tin va tra ra
             {
-               
+                if (customerCache.TryUpdate(id, c,old))//update c vao old qua id
+                {
+                    return c;
+                }
             }
         }
-        return old;
+        return null;
     }
     
 }

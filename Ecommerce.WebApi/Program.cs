@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Formatters;//dung de dinh dang
 using SolidEdu.Shared;//su dung model va entity
 using static System.Console;
+using Ecommerce.WebApi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,10 @@ builder.Services.AddControllers(
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//dang ky Denpence injection cho ICustomerRepository la CustomerRepository
+//Tuong tu autowired cua spring
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 var app = builder.Build();
 
