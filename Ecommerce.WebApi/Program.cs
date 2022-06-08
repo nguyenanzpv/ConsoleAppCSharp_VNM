@@ -70,12 +70,11 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 //use Cors
 //app.UseCors("AllowAnyOrigin");
 app.UseCors("corsapp");
-
 
 app.UseAuthorization();
 

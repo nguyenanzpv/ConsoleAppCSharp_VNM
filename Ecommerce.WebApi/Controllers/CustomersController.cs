@@ -121,7 +121,7 @@ namespace Ecommerce.WebApi.Controllers
 
             if (existing == null)
             {
-                if(id == "bad")
+                if(id == "bad")//test ting problem detail
                 {
                     //best pratice save to static class and to db
                     ProblemDetails problemDetails = new()// su dung class ProblemDetails cua IAction Result in ApiController
