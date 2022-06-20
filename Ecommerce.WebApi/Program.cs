@@ -4,10 +4,20 @@ using static System.Console;
 using Ecommerce.WebApi.Repositories;
 using Microsoft.OpenApi.Models;//for swagger
 using Swashbuckle.AspNetCore.SwaggerUI;
-
+using Ecommerce.IdentityJWT.Authentication;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Intergated Authenticate by dongbh
+ConfigurationManager configuration = builder.Configuration;//doc toan bo thongt in cau hinh
+//Create connect to db via entityframework
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer());
+//End Intergrated Authenticate by dongbh
 
 // Add services to the container.
 // Add method AddEcommerceContext()  to connect SQL Server
