@@ -14,10 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEcommerceContext();
 
 //config allow cors
-builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
-{
-    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-}));
+//builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+//{
+//    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+//}));
+
+//config allow cors by bhdong
+builder.Services.AddCors();
 
 builder.Services.AddControllers(
     options => //add them de format dinh dang xml
@@ -74,7 +77,18 @@ if (app.Environment.IsDevelopment())
 
 //use Cors
 //app.UseCors("AllowAnyOrigin");
-app.UseCors("corsapp");
+//app.UseCors("corsapp");
+
+//config allow cors by bhdong
+app.UseCors(configurePolicy:options =>
+{
+    options.WithMethods("GET","POST","PUT","DELETE");
+    options.WithOrigins("http://localhost:5002");//only allow request from the client  different domain
+
+});
+
+//config middleware headers
+app.UseMiddleware<SecurityHeaders>();
 
 app.UseAuthorization();
 
