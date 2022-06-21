@@ -3,4 +3,17 @@
 dotnet ef dbcontext scaffold "Data Source=.;Initial Catalog=SolidStore;Integrated Security=true;" Microsoft.EntityFrameworkCore.SqlServer --namespace SolidEdu.Shared --data-annotations
 -================
 Note: automatic generate all entities for our model from the database
-2. 
+2. Lenh generate table db tu model class
+Tool -> Nuget Packet Manager -> Packet Manage Console
+switch ve project Ecommerce.IdentityJWT co chua ApplicationDbContext
+add-migration Initial
+Truong hop co 2 context thi:
+add-migration Initial -Context tencontext
+update-database
+update-database -Context ApplicationDbContext
+
+register user token:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoicmVnaXN0ZXJ1c2VyIiwianRpIjoiMmVjN2RmMDYtMWRhZi00OGQ2LWI5OWItNDJkOGFlZWMyMTQ2IiwiZXhwIjoxNjU1Nzg5ODIzLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQyMDAifQ.CPpFD7hv2PQ_58_-1xIlfLAXCyf658J1KYkav2avtkM
+
+admin user token:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW51c2VyIiwianRpIjoiYWEyNTM1NWYtNTIxYS00YzdiLWFhN2UtYmZiY2I3NGUyYjhhIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIlVzZXIiLCJDbGllbnQiLCJBZG1pbiJdLCJleHAiOjE2NTU3OTA0ODAsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMCIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJ9.-onlPgVsxHYLfzf66b9LMVtWEOhvrYhBCGGWHClcHvg

@@ -2,3 +2,6 @@
 2. microsoft.EntityframeWorkCore.Tools
 3. Microsoft.AspNetCore.Identity.EntityFrameWorkCore
 4. Microsoft.AspNetCore.Authentication.JwtBearer
+5. Microsoft.EntityFrameworkCore.Design
+6. Microsoft.AspNetCore.MVC.Versioning
+7. Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer

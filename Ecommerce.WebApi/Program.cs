@@ -9,6 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc;
+using System.Text;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +20,29 @@ var builder = WebApplication.CreateBuilder(args);
 //Intergated Authenticate by dongbh
 ConfigurationManager configuration = builder.Configuration;//doc toan bo thongt in cau hinh
 //Create connect to db via entityframework
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer());
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("ConnStrSQLServerDB")));
+//Intergrated Identity User and Role -> create and save to db
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+//Add Authentication to validate token when user send request
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;//config jwt use bearer deafault
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options => //xac thuc jwt token
+{
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters() { 
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidAudience = configuration["JWT:ValidAudience"],
+        ValidIssuer = configuration["JWT:ValidIssuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+    };
+});
 //End Intergrated Authenticate by dongbh
 
 // Add services to the container.
@@ -63,6 +89,19 @@ builder.Services.AddSwaggerGen(c =>
     { Title = "Ecommerce Service API", Version = "v1" });
 });
 
+//Add service api version -> quan ly phien ban cho production va testing
+builder.Services.AddApiVersioning(config =>
+{
+    config.DefaultApiVersion = new ApiVersion(1,0);//version chinh 1, phu 0
+    config.AssumeDefaultVersionWhenUnspecified = true;
+    config.ReportApiVersions = true;
+});
+//config version v+number -> v1...
+builder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'vvv";
+});
+
 //dang ky Denpence injection cho ICustomerRepository la CustomerRepository
 //Tuong tu autowired cua spring
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -99,7 +138,9 @@ app.UseCors(configurePolicy:options =>
 
 //config middleware headers
 app.UseMiddleware<SecurityHeaders>();
-
+// add authentication by dongbh
+app.UseAuthentication();
+// end add authentication by dongbh
 app.UseAuthorization();
 
 app.MapControllers();

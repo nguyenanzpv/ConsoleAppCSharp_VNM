@@ -154,7 +154,7 @@ public class AuthenticateController : ControllerBase
             audience: this._configuration["JWT:ValidAudience"],
             expires: DateTime.Now.AddHours(2),
             claims: authClaims,//info sign
-            signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.EcdsaSha512) //giai thuat singing
+            signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256) //giai thuat singing
         );
         return tokenValue;
     }

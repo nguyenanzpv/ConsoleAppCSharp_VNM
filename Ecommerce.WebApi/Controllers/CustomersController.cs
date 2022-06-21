@@ -2,11 +2,16 @@
 using SolidEdu.Shared;//Customer Entity
 using Ecommerce.WebApi.Repositories;//ICustomerRepository
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
+using Ecommerce.IdentityJWT.Authentication;
 
 namespace Ecommerce.WebApi.Controllers
 {
     //url base: api/Customers => json
-    [Route("api/[controller]")] //api/Customers
+    //[Authorize]//cau hinh buoc xac thuc quyen token moi duoc access -> cho tat ca role
+    [Authorize(Roles =UserRoles.AdminRole)] //chi role admin moi duoc vao api tat ca phuong thuc
+    [ApiVersion("1.0")]// cau hinh quan ly version
+    [Route("api/v{version:apiVersion}/[controller]")] //api/Customers
     [ApiController]//using http verse
     public class CustomersController : ControllerBase
     {
@@ -40,6 +45,7 @@ namespace Ecommerce.WebApi.Controllers
         //Get: api/customers/[id]
         //return 1 phan tu nen dung IActionResult
         //[EnableCors]
+        [Authorize(Roles = UserRoles.AdminRole)] //chi dinh phuong thuc nay co quyen moi duoc vao
         [HttpGet("{id}", Name = nameof(GetCustomer))]
         [ProducesResponseType(200, Type=typeof(Customer))]
         [ProducesResponseType(404)]
